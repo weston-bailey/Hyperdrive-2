@@ -1,13 +1,14 @@
 // game engine
-import Game from './engine/Game.js';
-import Audio from './engine/Audio.js';
-import Input from './engine/Input.js';
-import Level from './engine/Level.js';
-import UserInterface from './engine/UserInterface.js';
-import Wavemachine from './engine/Wavemachine.js';
+import Engine from './GameEngine/Engine.js';
+import Audio from './GameEngine/Audio.js';
+import Input from './GameEngine/Input.js';
+import Level from './GameEngine/Level.js';
+import UserInterface from './GameEngine/UserInterface.js';
+import Wavemachine from './GameEngine/Wavemachine.js';
 // backgrounds
-import Box from './background/Box.js'
-import Star from './background/Star.js'
+import Box from './background/Box.js';
+import Planet from './background/Planet.js';
+import Star from './background/Star.js';
 // enemies
 import Polygon from './enemy/Polygon.js'
 // non player/enemy objects
@@ -20,7 +21,7 @@ import Util from './util/Util.js'
 // import waves in the future
 
 // namespaces
-const Engine = {
+const GameEngine = {
   Audio,
   Input,
   Level,
@@ -30,6 +31,7 @@ const Engine = {
 
 const Background = {
   Box,
+  Planet,
   Star,
 }
 
@@ -47,8 +49,9 @@ const Player = {
 }
 
 export {
-  Game,
   Engine,
+  Particle,
+  GameEngine,
   Background,
   Enemy,
   Player,

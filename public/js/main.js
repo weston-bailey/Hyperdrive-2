@@ -1,13 +1,14 @@
-import { Game } from './lib/modules.js';
+import { Engine } from './lib/modules.js'
 
-document.addEventListener('DOMContentLoaded', init());
+const LOAD_PAGE = document.addEventListener('DOMContentLoaded', init());
 
 function init() {
+  let side = window.innerWidth < window.innerHeight ? window.innerWidth - 10 : window.innerHeight - 10;
   let gameArgs = {
     canvasId: 'game-canvas', // html canvas element id
-    canvasHeight: 800,       // cnvas height in pixels
-    canvasWidth: 800,        // canvas width in pixels
-    currentLevel: 0          //level to start at
+    canvasHeight: side,       // cnvas height in pixels
+    canvasWidth: side,        // canvas width in pixels
+    currentLevel: 0          // level to start at
   }
-  new Game(gameArgs);
+  new Engine(gameArgs);
 }
