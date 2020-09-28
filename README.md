@@ -3,7 +3,7 @@
 deployment at heroku: [HYPERDRIVE](https://hyperdrivegame.herokuapp.com)
 
     [] Game Engine
-      [] class Engine.Game 
+      [] export default class Engine.Game 
         [] init method
           [] setup canvas
           [] render loading screen
@@ -28,16 +28,16 @@ deployment at heroku: [HYPERDRIVE](https://hyperdrivegame.herokuapp.com)
           [] update wave machine
           [] update HUD
           [] request animation frame
-      [] class Engine.Wavemachine
-      [] class Engine.Level
-      [] class Engine.UserInterface (for HUD)
-      [] class Engine.Audio
-      [] class Engine.Input
+      [] export default class Engine.Wavemachine
+      [] export default class Engine.Level
+      [] export default class Engine.UserInterface (for HUD)
+      [] export default class Engine.Audio
+      [] export default class Engine.Input
       
-    [] class Player.Ship
-    [] class Background.Star
-    [] class Background.Box
-    [] class Enemy.Polygon
+    [] export default class Player.Ship
+    [] export default class Background.Star
+    [] export default class Background.Box
+    [] export default class Enemy.Polygon
     [] functions waves
     [] function utilities
 
