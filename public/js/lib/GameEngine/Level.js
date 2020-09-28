@@ -1,4 +1,4 @@
-// import { Background } from '../modules.js';
+import Component from '../GameEngine/Component.js'
 
 /*
 let levelArgs = {
@@ -19,8 +19,9 @@ let levelArgs = {
     ],
   }
 */
-export default class Level{
+export default class Level extends Component {
   constructor(levelArgs){
+    super();
     this.game = levelArgs.game;
     this.title = levelArgs.title; 
     this.levelOffset = levelArgs.levelOffset;
@@ -28,13 +29,12 @@ export default class Level{
     this.currentSubLevel = 0;
     this.menu = levelArgs.menu;
     this.wavemachine = levelArgs.wavemachine;
-    this.backgroundColor = levelArgs.backgroundLayers;
+    this.backgroundColor = levelArgs.backgroundLayers; // currently unused
     this.backgroundLayers = levelArgs.backgroundLayers;
     this.init()
   }
 
   init(){
-    // console.log(typeof this.backgroundLayers[0].args.speed)
     // clear the background array
     this.game.background = [];
     // iterate to create layers
@@ -43,12 +43,6 @@ export default class Level{
       // the class we are about to invoke
       let backgroundObject = this.backgroundLayers[i].class;
       for(let j = 0; j < this.backgroundLayers[i].amount; j++){
-        // let classArgs = {}
-        // for (let arg in this.backgroundLayers[i].args) {
-        //   // console.log(typeof arg === 'function' ? this.backgroundLayers.args[arg]() : this.backgroundLayers.args[arg])
-        //   console.log(typeof arg === 'function')
-        // }
-        // console.log(classArgs);
         // make a new object and push it to the array
         this.game.background[i].push(new backgroundObject(this.backgroundLayers[i].args))
       }

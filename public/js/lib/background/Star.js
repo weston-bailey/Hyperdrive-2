@@ -1,3 +1,4 @@
+import Component from '../GameEngine/Component.js'
 import { Util } from '../modules.js';
 /*
 starArgs {
@@ -9,8 +10,9 @@ starArgs {
   radius: Number, // draw radius (float),
 }
 */
-export default class Star {
+export default class Star extends Component {
   constructor(starArgs){
+    super();
     this.game = starArgs.game,
     this.speed = starArgs.speed;
     this.x = starArgs.x;
@@ -21,12 +23,7 @@ export default class Star {
   }
 
   init(){
-    for(let prop in this){
-      // skip the game class
-      if(prop === 'game') continue;
-      if(typeof this[prop] === 'function') this[prop] = this[prop]();
-    }
-    console.log(this)
+    super.returnFunctionProps();
   }
 
   update(){

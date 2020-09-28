@@ -5,7 +5,6 @@ const Util = {
   //make random color hex
   randomColorHex:() => {
     let hex = `#${Math.floor(Math.random()*16777215).toString(16)}`
-    //console.log(hex);
     return hex;
   },
   //convert color hex to rgb with a predefined alpha(optional)
