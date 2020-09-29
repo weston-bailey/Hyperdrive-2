@@ -19,20 +19,32 @@ export default class Star extends Component {
     this.y = starArgs.y;
     this.color =  starArgs.color;
     this.radius = starArgs.radius;
+    this.updatePointer = null;
     this.init()
   }
 
   init(){
     super.returnFunctionProps();
+    this.updatePointer = this.recycle;
   }
 
+  // recycle star to top of canvas
+  recycle(){
+    this.y = 0;
+    this.x = Math.random() * this.game.canvasWidth; 
+  }
+
+  // mark for garbage collection
+  garbage(){
+    this.isGarbage = true;
+  }
+
+  //move star
   update(){
-    //move star
     this.y += this.speed;
     //if star moves off screen, reset y and randomize x to repurpose it as a new star
     if(this.y > this.game.canvasHeight){
-      this.y = 0;
-      this.x = Math.random() * this.game.canvasWidth; 
+      this.updatePointer();
     }
   }
 

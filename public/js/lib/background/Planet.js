@@ -2,7 +2,7 @@ import Star from './Star.js';
 import { Util } from '../modules.js';
 
 
-export default class Planet extends Star{
+export default class Planet extends Star {
   constructor(starArgs){
     super(starArgs);
   }
