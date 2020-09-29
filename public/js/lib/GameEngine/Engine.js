@@ -1,3 +1,4 @@
+// import Component from '../GameEngine/Component.js'
 import { GameEngine, Background, Util } from '../modules.js';
 
 /*
@@ -14,6 +15,7 @@ export default class Engine {
     this.canvas = document.getElementById(gameArgs.canvasId);
     this.canvasHeight = gameArgs.canvasHeight;
     this.canvasWidth = gameArgs.canvasWidth;
+    this.units = {};
     this.ctx = null;
     // game state
     this.renderPointer = null; 
@@ -21,7 +23,6 @@ export default class Engine {
     this.levels = [];
     this.currentLevel = gameArgs.currentLevel;
     this.background = [];
-
     this.init();
   }
 
@@ -30,63 +31,71 @@ export default class Engine {
     this.ctx = this.canvas.getContext('2d');
     this.canvas.width = this.canvasWidth;
     this.canvas.height = this.canvasHeight;
+    // make game measurement units
+    this.units.unit = this.canvasHeight / 800;
+    this.units.spawn1X = 0 - this.canvasHeight;
+    this.units.spawn2X = 0 - this.canvasHeight * 2;
+    this.units.spawn3X = 0 - this.canvasHeight * 3;
     // device pixel ratio for high res screens
     let dpr = window.devicePixelRatio || 1;
     this.ctx.scale(dpr, dpr);
     //  make levels
-    let levelArgs = {
-      game: this,
-      title: 'Loading Screen', // level title
-      // levelOffset: Number, // offset for hardness calc
-      // subLevels: Number, // how many sublevels before a new level
-    
-      // menu: Object, // menu to display at level start
-      // wavemachine: Object, // a wavemachine object
-      backgroundColor: `rgba(0, 0, 0, 1)`, // color to render bg
-      backgroundLayers: [ 
-        // // distant stars
-        {
-          args: {
-            game: this,
-            speed: () => { return 1 + Math.random() },
-            x: () => { return Math.random() * this.canvasWidth },
-            y: () => { return Math.random() * this.canvasHeight },
-            color: `rgba(255, 255, 255, .15)`,
-            radius: 1,
-          }, 
-          class: Background.Star, // refernce to class to render on this later
-          amount: 75 // number of objects to render on this layer
-        },
-        // closer stars
-        {
-          args: {
-            game: this,
-            speed: () => { return 3 - Math.random() },
-            x: () => { return Math.random() * this.canvasWidth },
-            y: () => { return Math.random() * this.canvasHeight },
-            color: `rgba(255, 255, 255, .3)`,
-            radius: 1,
-          }, 
-          class: Background.Star, // refernce to class to render on this later
-          amount: 75 // number of objects to render on this layer
-        },
-        // planets
-        {
-          args: {
-            game: this,
-            speed: () => { return 1 + Math.random() },
-            x: () => { return Math.random() * this.canvasWidth },
-            y: () => { return Math.random() * this.canvasHeight },
-            color: () => { return  Util.hexToRGBA(Util.randomColorHex(), Math.random()) },
-            radius: () => { return Math.random() * 3 },
-          }, 
-          class: Background.Planet, // refernce to class to render on this later
-          amount: 3 // number of objects to render on this layer
-        }
-      ],
+    function openSpace(game){
+      const levelArgs = {
+        game: game,
+        title: 'Open Space', // level title
+        levelOffset: game.currentLevel, // offset for hardness calc
+        subLevels: Util.randomIntInRange(2, 4), // how many sublevels before a new level
+      
+        // menu: Object, // menu to display at level start
+        wavemachine: null, // a wavemachine object
+        backgroundColor: `rgba(0, 0, 0, 1)`, // color to render bg
+        backgroundLayers: [ 
+          // distant stars
+          {
+            args: {
+              game: game,
+              speed: () => { return game.units.unit + Math.random() },
+              x: () => { return Util.randomIntInRange(0, game.canvasWidth) },
+              y: () => { return Util.randomIntInRange(game.units.spawn1X, game.units.spawn2X) },
+              color: `rgba(255, 255, 255, .15)`,
+              radius: 1,
+            }, 
+            class: Background.Star, // refernce to class to render on later
+            amount: 75 // number of objects to render on game layer
+          },
+          // closer stars
+          {
+            args: {
+              game: game,
+              speed: () => { return (game.units.unit * 3) - Math.random() },
+              x: () => { return Util.randomIntInRange(0, game.canvasWidth) },
+              y: () => { return Util.randomIntInRange(game.units.spawn1X, game.units.spawn2X) },
+              color: `rgba(255, 255, 255, .3)`,
+              radius: 1,
+            }, 
+            class: Background.Star, // refernce to class to render on  later
+            amount: 75 // number of objects to render on game layer
+          },
+          // planets
+          {
+            args: {
+              game: game,
+              speed: () => { return game.units.unit + Math.random() },
+              x: () => { return Util.randomIntInRange(0, game.canvasWidth) },
+              y: () => { return Util.randomIntInRange(game.units.spawn1X, game.units.spawn2X) },
+              color: () => { return  Util.hexToRGBA(Util.randomColorHex(), Math.random()) },
+              radius: () => { return Math.random() * 3 },
+            }, 
+            class: Background.Planet, // refernce to class to render on game later
+            amount: 3 // number of objects to render on game layer
+          }
+        ],
+      }
+      return levelArgs;
     }
-    // console.log(typeof levelArgs.backgroundLayers[0].args.y)
-    this.levels.push(new GameEngine.Level(levelArgs));
+
+    this.levels.push(new GameEngine.Level(openSpace(this)));
     // make background
     this.renderPointer = () => this.render();
     this.render();
@@ -98,12 +107,10 @@ export default class Engine {
 
   // render loop 
   render(){
-    // draw background
+    // update and draw background
     this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-    this.ctx.fillStyle = 'black';
-    // this.ctx.fillStyle = this.levels[0].backgroundColor.length // not working
+    this.ctx.fillStyle = this.levels[0].backgroundColor // not working
     this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-
     for(let i = 0; i < this.background.length; i++){
       for(let j = 0; j < this.background[i].length; j++){
         this.background[i][j].update();
@@ -111,7 +118,31 @@ export default class Engine {
       }
     }
 
-    console.log('render frame')
+    // collect garbage
+    for(let i = 0; i < this.background.length; i++){
+      // get rid of empty arrays
+      if(this.background[i].length === 0) this.background.splice(i, 1);
+      for(let j = 0; j < this.background[i].length; j++){
+        // remove flagged garbage
+        if(this.background[i][j].isGarbage) this.background[i][j].splice(j, 1);
+      }
+    }
+
+    requestAnimationFrame(this.renderPointer);
+  }
+
+  pauseRender() {
+    // draw background
+    this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    this.ctx.fillStyle = 'black';
+    // this.ctx.fillStyle = this.levels[0].backgroundColor.length // not working
+    this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+    for(let i = 0; i < this.background.length; i++){
+      for(let j = 0; j < this.background[i].length; j++){
+        this.background[i][j].draw();
+      }
+    }
+
     requestAnimationFrame(this.renderPointer);
   }
 }
