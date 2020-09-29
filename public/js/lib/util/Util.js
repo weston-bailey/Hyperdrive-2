@@ -1,31 +1,75 @@
-// various useful constants and functions
-const Util = {
-  // constants
-  TWO_PI: 2 * Math.PI,
-  //make random color hex
-  randomColorHex:() => {
+export default class Util {
+  static TWO_PI = 2 * Math.PI;
+
+  static randomColorHex(){
     let hex = `#${Math.floor(Math.random()*16777215).toString(16)}`
-    //console.log(hex);
     return hex;
-  },
-  //convert color hex to rgb with a predefined alpha(optional)
-  hexToRGBA: (hex, alpha) => {
+  }
+
+  // convert color hex to rgb with a predefined alpha(optional)
+  static hexToRGBA(hex, alpha) {
     var r = parseInt(hex.slice(1, 3), 16),
         g = parseInt(hex.slice(3, 5), 16),
         b = parseInt(hex.slice(5, 7), 16),
         a = alpha || 1.;
         return `rgba(${r}, ${g}, ${b}, ${a})`;
-  },
-  //convert color hex to rgb values returned as an array
-  //used mainly to convert enemy colors from hexes to a format
-  //that debris can use to modify the alpha of
-  hexToRGBArray: (hex) => {
+  }
+
+  // convert color hex to rgb values rturned as an array
+  // used mainly to convert enemy colors from hexes to a format
+  // that debris can use to modify the alpha of
+  static hexToRGBArray(hex) {
     var r = parseInt(hex.slice(1, 3), 16),
         g = parseInt(hex.slice(3, 5), 16),
         b = parseInt(hex.slice(5, 7), 16);
         return [r, g, b];
-  },
+  }
 
+  // round a number to decimal places
+  static round(num, places){
+    places = Math.pow(10, places)
+    return Math.round(num * places) / places;
+  }
+
+  // returns a random positive number in a range
+  static randomInRange(minimum, maximum){
+    return Math.random() * (maximum - minimum) + minimum;
+  }
+
+  static randomIntInRange(minimum, maximum) {
+    minimum = Math.ceil(minimum);
+    maximum = Math.floor(maximum);
+    return Math.floor(Math.random() * (maximum - minimum) + minimum); 
+  }
 }
 
-export default Util;
+// // various useful constants and functions
+// const Util = {
+//   // constants
+//   TWO_PI: 2 * Math.PI,
+//   //make random color hex
+//   randomColorHex:() => {
+//     let hex = `#${Math.floor(Math.random()*16777215).toString(16)}`
+//     return hex;
+//   },
+//   //convert color hex to rgb with a predefined alpha(optional)
+//   hexToRGBA: (hex, alpha) => {
+//     var r = parseInt(hex.slice(1, 3), 16),
+//         g = parseInt(hex.slice(3, 5), 16),
+//         b = parseInt(hex.slice(5, 7), 16),
+//         a = alpha || 1.;
+//         return `rgba(${r}, ${g}, ${b}, ${a})`;
+//   },
+//   //convert color hex to rgb values returned as an array
+//   //used mainly to convert enemy colors from hexes to a format
+//   //that debris can use to modify the alpha of
+//   hexToRGBArray: (hex) => {
+//     var r = parseInt(hex.slice(1, 3), 16),
+//         g = parseInt(hex.slice(3, 5), 16),
+//         b = parseInt(hex.slice(5, 7), 16);
+//         return [r, g, b];
+//   },
+
+// }
+
+// export default Util;
