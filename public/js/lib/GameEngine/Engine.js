@@ -25,7 +25,7 @@ export default class Engine {
     this.units = {};
     // game state
     this.renderPointer = null; 
-    this.ship = null;
+    this.player = [];
     this.levels = [];
     this.currentLevel = gameArgs.currentLevel;
     this.background = [];
