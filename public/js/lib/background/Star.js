@@ -31,7 +31,7 @@ export default class Star extends Component {
   // recycle star to top of canvas
   recycle(){
     this.y = 0;
-    this.x = Math.random() * this.game.canvasWidth; 
+    this.x = Math.random() * this.game.width; 
   }
 
   // mark for garbage collection
@@ -42,19 +42,19 @@ export default class Star extends Component {
   //move star
   update(){
     this.y += this.speed;
-    //if star moves off screen, reset y and randomize x to repurpose it as a new star
-    if(this.y > this.game.canvasHeight){
+    //if star moves off bottom of screen, call the update method
+    if(this.y > this.game.height){
       this.updatePointer();
     }
   }
 
   //stars are just little circles
   draw(){
-    this.game.ctx.lineWidth = 2;
-    this.game.ctx.strokeStyle = this.color;
-    this.game.ctx.beginPath();
-    this.game.ctx.arc(this.x, this.y, this.radius, 0, Util.TWO_PI);
-    this.game.ctx.closePath();
-    this.game.ctx.stroke();
+    this.game.bgCtx.lineWidth = 2;
+    this.game.bgCtx.strokeStyle = this.color;
+    this.game.bgCtx.beginPath();
+    this.game.bgCtx.arc(this.x, this.y, this.radius, 0, Util.TWO_PI);
+    this.game.bgCtx.closePath();
+    this.game.bgCtx.stroke();
   }
 }
