@@ -3,12 +3,8 @@ body, html {
   background-color: #808080;
 }
 
-/* HTML canvas */
-#game-canvas {
-  z-index: 0;
-  border: 3px solid green;
-  border-radius: 25px;
-  cursor: default;
+#canvas-container {
+  cursor: none;
   /* center horizontally */
   margin: 0 auto;
   display: block;
@@ -17,4 +13,34 @@ body, html {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);   
+}
+
+/* HTML canvases */
+.engine-canvas {
+  border-radius: 25px;
+  /* center horizontally */
+  margin: 0 auto;
+  display: block;
+  position: absolute;
+  /* center vertically */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);   
+}
+
+/* game background */
+#bg-canvas {
+  z-index: -3;
+}
+
+/* main render canvas */
+#game-canvas {
+  z-index: -2; 
+}
+
+/* user interaction/menu canvas */
+#ui-canvas {
+  z-index: -1;
+  border: 3px solid green;
+  border-radius: 25px;
 }
