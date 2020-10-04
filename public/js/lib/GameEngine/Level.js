@@ -51,6 +51,5 @@ export default class Level extends Component {
         this.game.background[i].push(new backgroundObject(this.backgroundLayers[i].args))
       }
     }
-    console.log(this.game.background)
   }
 }

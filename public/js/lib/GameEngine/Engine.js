@@ -1,6 +1,8 @@
 // import Component from '../GameEngine/Component.js'
 import openSpace from '../Levels/openSpace.js';
-import { GameEngine, Background, Util } from '../modules.js';
+import { GameEngine, Util } from '../modules.js';
+import Ship from '../player/Ship.js';
+import KeyboardInput from './KeyboardInput.js';
 
 /*
 engineArgs = {
@@ -12,23 +14,36 @@ engineArgs = {
 */
 export default class Engine {
   constructor(gameArgs) {
-    // for the game canvas
+    // for the game canvases
     this.bgCanvas = Util.createDOMElement('canvas', gameArgs.divId, 'bg-canvas', 'engine-canvas');
     this.gameCanvas = Util.createDOMElement('canvas', gameArgs.divId, 'game-canvas', 'engine-canvas');
     this.uiCanvas = Util.createDOMElement('canvas', gameArgs.divId, 'ui-canvas', 'engine-canvas');
     this.bgCtx = null;
     this.gameCtx = null;
     this.uiCtx = null;
-    // relative measurement unts
+    // w/h in pixels of render area
     this.height = gameArgs.height;
     this.width = gameArgs.width;
-    this.units = {};
+    // relative measurement units
+    this.units = {
+      width: null,
+      height: null,
+      spawn1X: null,
+      spawn2X: null,
+      spawn3X: null,
+    };
     // game state
     this.renderPointer = null; 
-    this.ship = null;
-    this.levels = [];
-    this.currentLevel = gameArgs.currentLevel;
+    this.gameActive = false;
+    this.inputDevices = [];
     this.background = [];
+    this.player = [];
+    this.enemies =  [];
+    this.particles = [];
+    this.ui = {};
+    this.currentLevel = gameArgs.currentLevel;
+    this.levels = [];
+    this.garbage = [];
     this.init();
   }
 
@@ -57,10 +72,22 @@ export default class Engine {
     // make background
     this.renderPointer = () => this.playRender();
     this.renderPointer();
-    // make game objects
-    // instantiate controls
     // check if fonts are loaded
-    // 
+    // make game objects
+    const shipArgs = {
+      game: this, // a reference to to current game
+      noseX: () => { return this.width * .5 }, // starting nose x pos
+      noseY: () => { return this.height * .5 }, // starting nose y pos
+      color:  `#faebd7` // `antiquewhite` the champagne of whites
+    }
+    this.player.push(new Ship(shipArgs));
+    // instantiate controls
+    const keyboardInputArgs = {
+      game: this,
+      player: 0,
+    }
+    this.inputDevices.push(new KeyboardInput(keyboardInputArgs))
+    // display loading complete menu
 
   }
 
@@ -68,8 +95,27 @@ export default class Engine {
 
   }
 
-  // render loop 
+  
+  // search for objects self flagged as garbage
+  collectGarbage(garbage) {
+    for(let i = 0; i < garbage.length; i++) {
+      for(let j = 0; j < garbage[i].length; j ++) {
+        if (garbage[i][j].isGarbage) garbage[i].splice(j, 1);
+      }
+    }
+  }
+
+  // main render loop 
   playRender(){
+    // reset player movement 
+    for(let i = 0; i < this.player.length; i++){
+      this.player[i].resetMovement();
+    }
+    // poll inputs to upodate state
+    for(let i = 0; i < this.inputDevices.length; i++) {
+      this.inputDevices[i].poll()
+    }
+
     // update and draw background
     this.bgCtx.clearRect(0, 0, this.width, this.height);
     this.bgCtx.fillStyle = this.levels[0].backgroundColor; 
@@ -81,26 +127,34 @@ export default class Engine {
         this.background[i][j].draw();
       }
     }
+
     // update and draw game canvas  
     this.gameCtx.clearRect(0, 0, this.width, this.height);
     // draw player objects
+    for(let i = 0; i < this.player.length; i++){
+      this.player[i].update();
+      this.player[i].draw();
+    }
 
     // draw enemy objects
 
     // draw particle objects
+    for(let i = 0; i < this.particles.length; i++) {
+      this.particles[i].update();
+      this.particles[i].draw();
+    }
 
     // check if ui/HUD needs to update
 
-    // collect garbage
-    for(let i = 0; i < this.background.length; i++){
-      // get rid of empty arrays
+    // find objects marked as garbage
+    this.collectGarbage([...this.background]);
+    // get rid of empty arrays
+    for(let i = 0; i < this.background.length; i++) {
       if(this.background[i].length === 0) this.background.splice(i, 1);
-      for(let j = 0; j < this.background[i].length; j++){
-        // remove flagged garbage
-        if(this.background[i][j].isGarbage) this.background[i][j].splice(j, 1);
-      }
     }
-    // update wave machine
+    this.collectGarbage([this.player, this.enemies, this.particles]);
+
+    // update wavemachine
 
     // update HUD
     
