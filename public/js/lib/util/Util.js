@@ -1,14 +1,24 @@
 export default class Util {
   static TWO_PI = 2 * Math.PI;
 
+  // create an html element, append it to a parent element and assign it an id
+  static createDOMElement(element, parentElementId, elementId, elementClass){
+    let newElement = document.createElement(element);
+    if(elementId) newElement.id = elementId;
+    if(elementClass) newElement.classList.add(elementClass)
+    document.body.appendChild(newElement);
+    document.getElementById(parentElementId).appendChild(newElement);
+    // console.log(`new element created: ${document.getElementById(elementId)}`);
+    return newElement;
+  }
+
   static randomColorHex(){
-    let hex = `#${Math.floor(Math.random()*16777215).toString(16)}`
-    return hex;
+    return `#${Math.floor(Math.random()*16777215).toString(16)}`;
   }
 
   // convert color hex to rgb with a predefined alpha(optional)
   static hexToRGBA(hex, alpha) {
-    var r = parseInt(hex.slice(1, 3), 16),
+    let r = parseInt(hex.slice(1, 3), 16),
         g = parseInt(hex.slice(3, 5), 16),
         b = parseInt(hex.slice(5, 7), 16),
         a = alpha || 1.;
@@ -19,10 +29,15 @@ export default class Util {
   // used mainly to convert enemy colors from hexes to a format
   // that debris can use to modify the alpha of
   static hexToRGBArray(hex) {
-    var r = parseInt(hex.slice(1, 3), 16),
+    let r = parseInt(hex.slice(1, 3), 16),
         g = parseInt(hex.slice(3, 5), 16),
         b = parseInt(hex.slice(5, 7), 16);
         return [r, g, b];
+  }
+
+  // convert degres to radians with supplied angle
+  static degreesToRadians(angle){
+    return (angle / Math.PI) * 180;
   }
 
   // round a number to decimal places
@@ -31,45 +46,22 @@ export default class Util {
     return Math.round(num * places) / places;
   }
 
-  // returns a random positive number in a range
+  // returns a random float in a range
   static randomInRange(minimum, maximum){
     return Math.random() * (maximum - minimum) + minimum;
   }
 
+  // returns random integer in given range
   static randomIntInRange(minimum, maximum) {
     minimum = Math.ceil(minimum);
     maximum = Math.floor(maximum);
     return Math.floor(Math.random() * (maximum - minimum) + minimum); 
   }
+
+  // makes a randoom number between a range that is either positive or negetive with probability (float 0 - 1) influencing the sign chance (optional)
+  static randomSignInRange(minimum, maximum, probability){
+    let prob = probability || .5;
+    let randomNum = Math.random() * (maximum - minimum) + minimum;
+    return Math.random() > prob ? randomNum : randomNum * -1;
+  }
 }
-
-// // various useful constants and functions
-// const Util = {
-//   // constants
-//   TWO_PI: 2 * Math.PI,
-//   //make random color hex
-//   randomColorHex:() => {
-//     let hex = `#${Math.floor(Math.random()*16777215).toString(16)}`
-//     return hex;
-//   },
-//   //convert color hex to rgb with a predefined alpha(optional)
-//   hexToRGBA: (hex, alpha) => {
-//     var r = parseInt(hex.slice(1, 3), 16),
-//         g = parseInt(hex.slice(3, 5), 16),
-//         b = parseInt(hex.slice(5, 7), 16),
-//         a = alpha || 1.;
-//         return `rgba(${r}, ${g}, ${b}, ${a})`;
-//   },
-//   //convert color hex to rgb values returned as an array
-//   //used mainly to convert enemy colors from hexes to a format
-//   //that debris can use to modify the alpha of
-//   hexToRGBArray: (hex) => {
-//     var r = parseInt(hex.slice(1, 3), 16),
-//         g = parseInt(hex.slice(3, 5), 16),
-//         b = parseInt(hex.slice(5, 7), 16);
-//         return [r, g, b];
-//   },
-
-// }
-
-// export default Util;

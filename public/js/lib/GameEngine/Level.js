@@ -29,7 +29,7 @@ export default class Level extends Component {
     this.currentSubLevel = 0;
     this.menu = levelArgs.menu;
     this.wavemachine = levelArgs.wavemachine;
-    this.backgroundColor = levelArgs.backgroundColor; // currently unused
+    this.backgroundColor = levelArgs.backgroundColor; 
     this.backgroundLayers = levelArgs.backgroundLayers;
     this.init()
   }
@@ -38,7 +38,7 @@ export default class Level extends Component {
     // mark everything in background array as garbage
     for(let i = 0; i < this.game.background.length; i++){
       for(let j = 0; j < this.background[i].length; j++){
-        this.game.background[i][j].updatePointer = this.game.background[i][j].garbage;
+        this.game.background[i][j].updatePointer = this.game.background[i][j].garbage();
       }
     }
     // iterate to create layers
@@ -51,6 +51,5 @@ export default class Level extends Component {
         this.game.background[i].push(new backgroundObject(this.backgroundLayers[i].args))
       }
     }
-    console.log(this.game.background)
   }
 }
