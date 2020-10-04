@@ -5,9 +5,9 @@ deployment at heroku: [HYPERDRIVE](https://hyperdrivegame.herokuapp.com)
     [] Game Engine
       [] export default class Engine.Game 
         [] init method
-          [] setup canvas
-          [] render loading screen
-          [] render background
+          [x] setup canvases
+          [x] render loading screen
+          [x] render background
           [] make game objects
           [] instantiate controls
           [] instantiate sound
@@ -15,8 +15,9 @@ deployment at heroku: [HYPERDRIVE](https://hyperdrivegame.herokuapp.com)
           [] render click-thru to start game
         [] render method
           [] poll inputs
-          [] clear canvas
-          [] draw background
+          [x] clear bg canvas
+          [x] draw background
+          [x] clear game canvas
           [] draw ship
           [] draw enemies
           [] draw exhaust
@@ -24,7 +25,7 @@ deployment at heroku: [HYPERDRIVE](https://hyperdrivegame.herokuapp.com)
           [] draw HUD
           [] check for collisions
           [] check for object self destruction
-          [] collect objects marked as garbage
+          [x] collect objects marked as garbage
           [] update wave machine
           [] update HUD
           [] request animation frame
