@@ -1,4 +1,4 @@
-import Component from '../GameEngine/Component.js'
+import Component from '../GameEngine/Component.js';
 import { Util } from '../modules.js';
 /*
 starArgs {
