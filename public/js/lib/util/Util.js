@@ -64,4 +64,11 @@ export default class Util {
     let randomNum = Math.random() * (maximum - minimum) + minimum;
     return Math.random() > prob ? randomNum : randomNum * -1;
   }
+
+  // good old clamp 
+  static clamp(x, min, max){
+    return (x > max ? max :
+            x < min ? min :
+            x)
+  }
 }
