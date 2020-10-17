@@ -19,7 +19,8 @@ export default class Ship extends Component{
     this.noseX = shipArgs.noseX; 
     this.noseY = shipArgs.noseY;
     this.color = shipArgs.color;
-    this.speed = this.game.units.height * 5;
+    this.speedX = this.game.units.height * 5;
+    this.speedY = this.game.units.height * 5;
     // check for movement from keypresses
     this.directionX = 0; 
     this.directionY = 0;
@@ -45,6 +46,8 @@ export default class Ship extends Component{
     this.directionY = 0;
     this.directionX = 0;
     this.shield = false;
+    this.speedX = this.game.units.height * 5;
+    this.speedY = this.game.units.height * 5;
   }
 
   update(){ 
@@ -52,7 +55,7 @@ export default class Ship extends Component{
       // mult by direction so vel is going the right way
       this.velocityY = this.directionY * (this.game.units.height * 3);
       //direction is either pos or neg 1
-      this.noseY += this.speed * this.directionY;
+      this.noseY += this.speedY * this.directionY;
       const exhaustArgs = {
         game: this.game, // a reference to to current game
         x: this.noseX,// starting x position (float),
@@ -64,7 +67,7 @@ export default class Ship extends Component{
     }
     if(this.directionX){
       this.velocityX = this.directionX * (this.game.units.width * 3);
-      this.noseX += this.speed * this.directionX;
+      this.noseX += this.speedX * this.directionX;
       const exhaustArgs = {
         game: this.game, // a reference to to current game
         x: this.noseX,// starting x position (float),
