@@ -1,6 +1,5 @@
+import css from '../css/styles.css'
 import { Engine } from './lib/modules.js'
-
-const LOAD_PAGE = document.addEventListener('DOMContentLoaded', init());
 
 function init() {
   let side = window.innerWidth < window.innerHeight ? window.innerWidth - 10 : window.innerHeight - 10;
@@ -12,3 +11,5 @@ function init() {
   }
   new Engine(gameArgs);
 }
+
+const LOAD_PAGE = document.addEventListener('DOMContentLoaded', init());

@@ -2,6 +2,7 @@
 import openSpace from '../Levels/openSpace.js';
 import { GameEngine, Util } from '../modules.js';
 import Ship from '../player/Ship.js';
+import GamepadInput from './GamepadInput.js';
 import KeyboardInput from './KeyboardInput.js';
 
 /*
@@ -36,6 +37,8 @@ export default class Engine {
     this.renderPointer = null; 
     this.gameActive = false;
     this.inputDevices = [];
+    this.gamepadConnected = null;
+    this.gamepadDisconnected = null;
     this.background = [];
     this.player = [];
     this.enemies =  [];
@@ -44,6 +47,13 @@ export default class Engine {
     this.currentLevel = gameArgs.currentLevel;
     this.levels = [];
     this.garbage = [];
+    // for menus and score tracking
+    this.score = {
+      totalWaves: 0,
+      distance: 0,
+      collisionsAvoided: 0,
+      enemiesDestroyed: 0,
+    }
     this.init();
   }
 
@@ -67,12 +77,16 @@ export default class Engine {
     // device pixel ratio for high res screens
     let dpr = window.devicePixelRatio || 1;
     this.gameCtx.scale(dpr, dpr);
+
     //  make levels
     this.levels.push(new GameEngine.Level(openSpace(this)));
-    // make background
+
+    // fire 'er up
     this.renderPointer = () => this.playRender();
     this.renderPointer();
+
     // check if fonts are loaded
+
     // make game objects
     const shipArgs = {
       game: this, // a reference to to current game
@@ -86,7 +100,33 @@ export default class Engine {
       game: this,
       player: 0,
     }
-    this.inputDevices.push(new KeyboardInput(keyboardInputArgs))
+
+    // init user input
+    this.inputDevices.push(new KeyboardInput(keyboardInputArgs));
+    this.gamepadConnected = window.addEventListener("gamepadconnected", (e) => {
+      const gamepadInputArgs = {
+        game: this,
+        playerNumber: 0,
+        // gamepadObject: 
+      }
+      this.inputDevices.push(new GamepadInput(gamepadInputArgs));
+      // console.log(
+      //     "Gamepad connected at index %d: %s. %d buttons, %d axes.",
+      //     e.gamepad.index, e.gamepad.id,
+      //     e.gamepad.buttons.length, 
+      //     e.gamepad.axes.length
+      //   );
+    });
+    this.gamepadDisconnected = window.addEventListener("gamepaddisconnected", (e) => {
+      this.inputDevices.splice(e.gamepad.index + 1, 1);
+      console.log(
+          "Gamepad disconnected at index %d: %s. %d buttons, %d axes.",
+          e.gamepad.index, e.gamepad.id,
+          e.gamepad.buttons.length, 
+          e.gamepad.axes.length
+        );
+    });
+
     // display loading complete menu
 
   }
@@ -95,7 +135,6 @@ export default class Engine {
 
   }
 
-  
   // search for objects self flagged as garbage
   collectGarbage(garbage) {
     for(let i = 0; i < garbage.length; i++) {
@@ -155,6 +194,10 @@ export default class Engine {
     this.collectGarbage([this.player, this.enemies, this.particles]);
 
     // update wavemachine
+    if(this.currentLevel.waveMachine) {
+      if(this.enemies.length === 0) this.currentLevel.waveMachine.waveActive = false;
+      this.currentLevel.waveMachine.update();
+    }
 
     // update HUD
     

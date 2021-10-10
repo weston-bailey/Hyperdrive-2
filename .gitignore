@@ -117,4 +117,4 @@ dist
 
 .DS_Store
 .vscode
-.env
+.envnode_modules
