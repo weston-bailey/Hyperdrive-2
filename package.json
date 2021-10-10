@@ -1,7 +1,7 @@
 {
-  "name": "webpack-html-template",
+  "name": "hyperdrive",
   "version": "1.0.0",
-  "description": "template for creating vanilla html websites using webpack and nodejs",
+  "description": "HYPERDRIVE: A retro-futuristic arcade game.",
   "main": "index.js",
   "scripts": {
     "test": "mocha",
