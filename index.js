@@ -2,7 +2,7 @@ const Express = require('express');
 
 const app = Express();
 
-app.use(Express.static('./public'));
+app.use(Express.static('./dist'));
 
 app.get('/', (req, res) => {
   res.send('index.html')
