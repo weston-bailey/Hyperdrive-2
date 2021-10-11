@@ -2,7 +2,7 @@ export default class Util {
   static TWO_PI = 2 * Math.PI 
 
   // create an html element, append it to a parent element and assign it an id
-  static createDOMElement(element, parentElementId, elementId, elementClass){
+  static createDOMElement(element, parentElementId, elementId, elementClass) {
     let newElement = document.createElement(element) 
     if(elementId) newElement.id = elementId 
     if(elementClass) newElement.classList.add(elementClass)
@@ -12,7 +12,7 @@ export default class Util {
     return newElement 
   }
 
-  static randomColorHex(){
+  static randomColorHex() {
     return `#${Math.floor(Math.random()*16777215).toString(16)}` 
   }
 
@@ -25,6 +25,8 @@ export default class Util {
         return `rgba(${r}, ${g}, ${b}, ${a})` 
   }
 
+
+
   // convert color hex to rgb values rturned as an array
   // used mainly to convert enemy colors from hexes to a format
   // that debris can use to modify the alpha of
@@ -36,18 +38,18 @@ export default class Util {
   }
 
   // convert degres to radians with supplied angle
-  static degreesToRadians(angle){
+  static degreesToRadians(angle) {
     return (angle / Math.PI) * 180 
   }
 
   // round a number to decimal places
-  static round(num, places){
+  static round(num, places) {
     places = Math.pow(10, places)
     return Math.round(num * places) / places 
   }
 
   // returns a random float in a range
-  static randomInRange(minimum, maximum){
+  static randomInRange(minimum, maximum) {
     return Math.random() * (maximum - minimum) + minimum 
   }
 
@@ -59,14 +61,14 @@ export default class Util {
   }
 
   // makes a randoom number between a range that is either positive or negetive with probability (float 0 - 1) influencing the sign chance (optional)
-  static randomSignInRange(minimum, maximum, probability){
+  static randomSignInRange(minimum, maximum, probability) {
     let prob = probability || .5 
     let randomNum = Math.random() * (maximum - minimum) + minimum 
     return Math.random() > prob ? randomNum : randomNum * -1 
   }
 
   // good old clamp 
-  static clamp(x, min, max){
+  static clamp(x, min, max) {
     return (x > max ? max :
             x < min ? min :
             x)

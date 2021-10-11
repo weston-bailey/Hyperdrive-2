@@ -13,7 +13,7 @@ const exhaustArgs = {
 
 // ship exhaust
 export default class Exhaust extends Component {
-  constructor(exhaustArgs){
+  constructor(exhaustArgs) {
     super() 
     this.game = exhaustArgs.game 
     this.speedX = exhaustArgs.speedX || Util.randomSignInRange(this.game.units.width * .1, this.game.units.width) 
@@ -37,13 +37,13 @@ export default class Exhaust extends Component {
     this.colorR -= 2  
     this.alpha -= .01 
     //mark for garbage collector when no longer visible
-    if(this.alpha <= 0){
+    if(this.alpha <= 0) {
       this.isGarbage = true 
     }
   }
 
   // exhaust are little circles
-  draw(){
+  draw() {
     this.game.gameCtx.lineWidth = this.game.units.width 
     this.game.gameCtx.strokeStyle = `rgba(${this.colorR}, ${this.colorG}, 0, ${this.alpha})` 
     this.game.gameCtx.beginPath() 

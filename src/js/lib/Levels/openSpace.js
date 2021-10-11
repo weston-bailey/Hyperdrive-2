@@ -1,6 +1,6 @@
 import { Util, Background } from '../modules.js'
 
-export default function openSpace(game){
+export default function openSpace(game) {
   const levelArgs = {
     game: game,
     title: 'Open Space', // level title

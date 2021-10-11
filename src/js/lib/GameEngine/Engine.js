@@ -147,9 +147,9 @@ export default class Engine {
   }
 
   // main render loop 
-  playRender(){
+  playRender() {
     // reset player movement 
-    for(let i = 0;  i < this.player.length;  i++){
+    for(let i = 0;  i < this.player.length;  i++) {
       this.player[i].resetMovement() 
     }
     // poll inputs to upodate state
@@ -161,9 +161,9 @@ export default class Engine {
     this.bgCtx.clearRect(0, 0, this.width, this.height) 
     this.bgCtx.fillStyle = this.levels[0].backgroundColor  
     this.bgCtx.fillRect(0, 0, this.width, this.height) 
-    for(let i = 0;  i < this.background.length;  i++){
+    for(let i = 0;  i < this.background.length;  i++) {
       // console.log(i, this.background[i][0]) 
-      for(let j = 0;  j < this.background[i].length;  j++){
+      for(let j = 0;  j < this.background[i].length;  j++) {
         this.background[i][j].update() 
         this.background[i][j].draw() 
       }
@@ -172,7 +172,7 @@ export default class Engine {
     // update and draw game canvas  
     this.gameCtx.clearRect(0, 0, this.width, this.height) 
     // draw player objects
-    for(let i = 0;  i < this.player.length;  i++){
+    for(let i = 0;  i < this.player.length;  i++) {
       this.player[i].update() 
       this.player[i].draw() 
     }
@@ -211,8 +211,8 @@ export default class Engine {
     this.gameCtx.clearRect(0, 0, this.width, this.height) 
     this.gameCtx.fillStyle = this.levels[0].backgroundColor 
     this.gameCtx.fillRect(0, 0, this.width, this.height) 
-    for(let i = 0;  i < this.background.length;  i++){
-      for(let j = 0;  j < this.background[i].length;  j++){
+    for(let i = 0;  i < this.background.length;  i++) {
+      for(let j = 0;  j < this.background[i].length;  j++) {
         this.background[i][j].draw() 
       }
     }

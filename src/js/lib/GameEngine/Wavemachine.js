@@ -8,8 +8,8 @@ const wavemachineArgs = {
 }
 */
 // creates waves for each level
-export default class Wavemachine extends Component{
-  constructor(wavemachineArgs){
+export default class Wavemachine extends Component {
+  constructor(wavemachineArgs) {
     super() 
     this.game = wavemachineArgs.game 
     this.waveActive = false 
@@ -18,21 +18,21 @@ export default class Wavemachine extends Component{
     this.waveMax = wavemachineArgs.waveMax || Util.randomIntInRange(8, 12) 
   }
 
-  update(){
+  update() {
     // wavemachine's services not needed if a wave is presently active
     if(this.waveActive) return
 
     let waveIndex = Util.randomIntInRange(0, this.waveFunctions.length)
     waveIndex = Util.clamp(waveIndex, 0, this.waveFunctions.length) // may not need
     let waveFunction = this.waveFunctions[waveIndex]
-    if(typeof waveFunction != `function`){ // may nod need
+    if(typeof waveFunction != `function`) { // may nod need
       console.warn(`wavemachine needs a function and found ${this.waveFunctions[waveIndex]} at index ${waveIndex} wavemachine retuning early`) 
       return 
     }
     // generate new wave
     waveFunction() 
     this.waveActive = true
-    if(this.game.gameActive){
+    if(this.game.gameActive) {
       this.waveCount++
       this.game.score.totalWaves++
     }

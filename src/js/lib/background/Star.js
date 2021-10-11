@@ -11,7 +11,7 @@ starArgs {
 }
 */
 export default class Star extends Component {
-  constructor(starArgs){
+  constructor(starArgs) {
     super() 
     this.game = starArgs.game,
     this.speed = starArgs.speed 
@@ -23,33 +23,33 @@ export default class Star extends Component {
     this.init()
   }
 
-  init(){
+  init() {
     super.returnFunctionProps() 
     this.updatePointer = this.recycle 
   }
 
   // recycle star to top of canvas
-  recycle(){
+  recycle() {
     this.y = 0 
     this.x = Math.random() * this.game.width  
   }
 
   // mark for garbage collection
-  garbage(){
+  garbage() {
     this.isGarbage = true 
   }
 
   //move star
-  update(){
+  update() {
     this.y += this.speed 
     //if star moves off bottom of screen, call the update method
-    if(this.y > this.game.height){
+    if(this.y > this.game.height) {
       this.updatePointer() 
     }
   }
 
   //stars are just little circles
-  draw(){
+  draw() {
     this.game.bgCtx.lineWidth = 2 
     this.game.bgCtx.strokeStyle = this.color 
     this.game.bgCtx.beginPath() 

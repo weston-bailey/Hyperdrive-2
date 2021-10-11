@@ -9,7 +9,7 @@ const keyboatdInputArgs = {
 // handles gamepad controllers
 // TODO: make this better
 export default class GamepadInput extends Component{
-  constructor(gamepadInputArgs){
+  constructor(gamepadInputArgs) {
     super() 
     this.game = gamepadInputArgs.game 
     this.gamepadObject = gamepadInputArgs.gamepadObject 
@@ -21,7 +21,7 @@ export default class GamepadInput extends Component{
   }
   
   // creates a deadzone in the middle of the analoge joystick axis
-  deadZone (number, threshold){
+  deadZone (number, threshold) {
     let percentage = (Math.abs(number) - threshold) / (1 - threshold) 
     if(percentage < 0) percentage = 0 
     return percentage * (number > 0 ? 1 : -1) 
@@ -32,12 +32,12 @@ export default class GamepadInput extends Component{
     const gamepadY = this.deadZone(gamepad.axes[1], .05)
     const gamepadX = this.deadZone(gamepad.axes[0], .05) 
       
-    if(gamepadY){
+    if(gamepadY) {
       this.game.player[this.playerNumber].speedY = Math.abs(gamepadY) * (this.game.units.height * 5) 
       this.game.player[this.playerNumber].directionY = gamepadY > 0 ? 1 : -1 
     } 
 
-    if(gamepadX){
+    if(gamepadX) {
       this.game.player[this.playerNumber].speedX = Math.abs(gamepadX) * (this.game.units.height * 5) 
       this.game.player[this.playerNumber].directionX = gamepadX > 0 ? 1 : -1 
     } 
@@ -48,8 +48,8 @@ export default class GamepadInput extends Component{
     //   // console.log('x ' + Math.abs(gamepadX), 'y ' + Math.abs(gamepadY),'speed ' + this.game.player[this.playerNumber].speed)
     // }
 
-    if (gamepad.buttons[0].pressed){
-      if(this.game.player[this.playerNumber].shieldLevel > 0 && !this.game.player[this.playerNumber].shieldCoolDown){
+    if (gamepad.buttons[0].pressed) {
+      if(this.game.player[this.playerNumber].shieldLevel > 0 && !this.game.player[this.playerNumber].shieldCoolDown) {
         this.game.player[this.playerNumber].shield = true 
       }
     } else if(!this.game.player[this.playerNumber].shieldCoolDown) {

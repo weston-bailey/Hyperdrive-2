@@ -14,7 +14,7 @@ const debrisArgs = {
 export default class Debris extends Component{
   //staring x, starting y, speed that debris dissapears (values closer to 0 is longer), color of debris
   //constructor is randomized is not passed values when created 
-  constructor(debirsArgs){
+  constructor(debirsArgs) {
     super() 
     this.game = debrisArgs.game 
     this.x = debirsArgs.x 
@@ -36,23 +36,23 @@ export default class Debris extends Component{
     super.returnFunctionProps() 
   }
 
-  update(){
+  update() {
     this.y += this.speedY 
     this.x += this.speedX 
     this.alpha -= this.alphaDecrement 
     this.radians += this.spinSpeed 
     //if is no longer visible it is marked as garbage
-    if(this.alpha <= 0){
+    if(this.alpha <= 0) {
       this.isGarbage = true 
     }
   }
-  draw(){
+  draw() {
     this.game.gameCtx.lineWidth = 1 
     this.game.gameCtx.strokeStyle = `rgba(${this.color[0]}, ${this.color[1]}, ${this.color[2]}, ${this.alpha})` 
     this.game.gameCtx.beginPath() 
     //same maths as polygon classes (see them for formula)
     this.game.gameCtx.moveTo(this.x - this.size * Math.cos(this.radians), this.y - this.size * Math.sin(this.radians)) 
-    for(let i = 0;  i < this.sides;  i++){
+    for(let i = 0;  i < this.sides;  i++) {
       this.game.gameCtx.lineTo(this.x - this.size * Math.cos(this.vertAngle * i + this.radians), this.y - this.size * Math.sin(this.vertAngle * i + this.radians)) 
     }
     this.game.gameCtx.closePath() 
