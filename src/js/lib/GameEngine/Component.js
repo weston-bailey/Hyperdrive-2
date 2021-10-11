@@ -1,6 +1,6 @@
 export default class Component {
   constructor(){
-    this.isGarbage = false;
+    this.isGarbage = false 
     this.returnFunctionProps()
   }
 
@@ -11,7 +11,7 @@ export default class Component {
   // check if any arguments are functions, and call them
   returnFunctionProps(){
     for(let prop in this){
-      if(typeof this[prop] === 'function') this[prop] = this[prop]();
+      if(typeof this[prop] === 'function') this[prop] = this[prop]() 
     }
   }
 

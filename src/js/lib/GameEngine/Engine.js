@@ -1,9 +1,9 @@
 // import Component from '../GameEngine/Component.js'
-import openSpace from '../Levels/openSpace.js';
-import { GameEngine, Util } from '../modules.js';
-import Ship from '../player/Ship.js';
-import GamepadInput from './GamepadInput.js';
-import KeyboardInput from './KeyboardInput.js';
+import openSpace from '../Levels/openSpace.js' 
+import { GameEngine, Util } from '../modules.js' 
+import Ship from '../player/Ship.js' 
+import GamepadInput from './GamepadInput.js' 
+import KeyboardInput from './KeyboardInput.js' 
 
 /*
 engineArgs = {
@@ -16,15 +16,15 @@ engineArgs = {
 export default class Engine {
   constructor(gameArgs) {
     // for the game canvases
-    this.bgCanvas = Util.createDOMElement('canvas', gameArgs.divId, 'bg-canvas', 'engine-canvas');
-    this.gameCanvas = Util.createDOMElement('canvas', gameArgs.divId, 'game-canvas', 'engine-canvas');
-    this.uiCanvas = Util.createDOMElement('canvas', gameArgs.divId, 'ui-canvas', 'engine-canvas');
-    this.bgCtx = null;
-    this.gameCtx = null;
-    this.uiCtx = null;
+    this.bgCanvas = Util.createDOMElement('canvas', gameArgs.divId, 'bg-canvas', 'engine-canvas') 
+    this.gameCanvas = Util.createDOMElement('canvas', gameArgs.divId, 'game-canvas', 'engine-canvas') 
+    this.uiCanvas = Util.createDOMElement('canvas', gameArgs.divId, 'ui-canvas', 'engine-canvas') 
+    this.bgCtx = null 
+    this.gameCtx = null 
+    this.uiCtx = null 
     // w/h in pixels of render area
-    this.height = gameArgs.height;
-    this.width = gameArgs.width;
+    this.height = gameArgs.height 
+    this.width = gameArgs.width 
     // relative measurement units
     this.units = {
       width: null,
@@ -32,21 +32,21 @@ export default class Engine {
       spawn1X: null,
       spawn2X: null,
       spawn3X: null,
-    };
+    } 
     // game state
-    this.renderPointer = null; 
-    this.gameActive = false;
-    this.inputDevices = [];
-    this.gamepadConnected = null;
-    this.gamepadDisconnected = null;
-    this.background = [];
-    this.player = [];
-    this.enemies =  [];
-    this.particles = [];
-    this.ui = {};
-    this.currentLevel = gameArgs.currentLevel;
-    this.levels = [];
-    this.garbage = [];
+    this.renderPointer = null  
+    this.gameActive = false 
+    this.inputDevices = [] 
+    this.gamepadConnected = null 
+    this.gamepadDisconnected = null 
+    this.background = [] 
+    this.player = [] 
+    this.enemies =  [] 
+    this.particles = [] 
+    this.ui = {} 
+    this.currentLevel = gameArgs.currentLevel 
+    this.levels = [] 
+    this.garbage = [] 
     // for menus and score tracking
     this.score = {
       totalWaves: 0,
@@ -54,36 +54,38 @@ export default class Engine {
       collisionsAvoided: 0,
       enemiesDestroyed: 0,
     }
-    this.init();
+    this.init() 
   }
 
   init() {
     // setup canvases
-    this.bgCtx = this.bgCanvas.getContext('2d');
-    this.bgCanvas.width = this.width;
-    this.bgCanvas.height = this.height;
-    this.gameCtx = this.gameCanvas.getContext('2d');
-    this.gameCanvas.width = this.width;
-    this.gameCanvas.height = this.height;
-    this.uiCtx = this.uiCanvas.getContext('2d');
-    this.uiCanvas.width = this.width;
-    this.uiCanvas.height = this.height;
+    this.bgCtx = this.bgCanvas.getContext('2d') 
+    this.bgCanvas.width = this.width 
+    this.bgCanvas.height = this.height 
+    this.gameCtx = this.gameCanvas.getContext('2d') 
+    this.gameCanvas.width = this.width 
+    this.gameCanvas.height = this.height 
+    this.uiCtx = this.uiCanvas.getContext('2d') 
+    this.uiCanvas.width = this.width 
+    this.uiCanvas.height = this.height 
+
     // make game measurement units
-    this.units.height = this.height / 800;
-    this.units.width = this.width / 800;
-    this.units.spawn1X = 0 - this.height;
-    this.units.spawn2X = 0 - this.height * 2;
-    this.units.spawn3X = 0 - this.height * 3;
-    // device pixel ratio for high res screens
-    let dpr = window.devicePixelRatio || 1;
-    this.gameCtx.scale(dpr, dpr);
+    this.units.height = this.height / 800
+    this.units.width = this.width / 800
+    this.units.spawn1X = 0 - this.height 
+    this.units.spawn2X = 0 - this.height * 2 
+    this.units.spawn3X = 0 - this.height * 3 
+
+    // device pixel ratio for high res screens TODO
+    // let dpr = window.devicePixelRatio || 1 
+    // this.gameCtx.scale(dpr, dpr) 
 
     //  make levels
-    this.levels.push(new GameEngine.Level(openSpace(this)));
+    this.levels.push(new GameEngine.Level(openSpace(this))) 
 
     // fire 'er up
-    this.renderPointer = () => this.playRender();
-    this.renderPointer();
+    this.renderPointer = () => this.playRender() 
+    this.renderPointer() 
 
     // check if fonts are loaded
 
@@ -94,7 +96,7 @@ export default class Engine {
       noseY: () => { return this.height * .5 }, // starting nose y pos
       color:  `#faebd7` // `antiquewhite` the champagne of whites
     }
-    this.player.push(new Ship(shipArgs));
+    this.player.push(new Ship(shipArgs)) 
     // instantiate controls
     const keyboardInputArgs = {
       game: this,
@@ -102,30 +104,30 @@ export default class Engine {
     }
 
     // init user input
-    this.inputDevices.push(new KeyboardInput(keyboardInputArgs));
+    this.inputDevices.push(new KeyboardInput(keyboardInputArgs)) 
     this.gamepadConnected = window.addEventListener("gamepadconnected", (e) => {
       const gamepadInputArgs = {
         game: this,
         playerNumber: 0,
         // gamepadObject: 
       }
-      this.inputDevices.push(new GamepadInput(gamepadInputArgs));
+      this.inputDevices.push(new GamepadInput(gamepadInputArgs)) 
       // console.log(
       //     "Gamepad connected at index %d: %s. %d buttons, %d axes.",
       //     e.gamepad.index, e.gamepad.id,
       //     e.gamepad.buttons.length, 
       //     e.gamepad.axes.length
-      //   );
-    });
+      //   ) 
+    }) 
     this.gamepadDisconnected = window.addEventListener("gamepaddisconnected", (e) => {
-      this.inputDevices.splice(e.gamepad.index + 1, 1);
+      this.inputDevices.splice(e.gamepad.index + 1, 1) 
       console.log(
           "Gamepad disconnected at index %d: %s. %d buttons, %d axes.",
           e.gamepad.index, e.gamepad.id,
           e.gamepad.buttons.length, 
           e.gamepad.axes.length
-        );
-    });
+        ) 
+    }) 
 
     // display loading complete menu
 
@@ -137,9 +139,9 @@ export default class Engine {
 
   // search for objects self flagged as garbage
   collectGarbage(garbage) {
-    for(let i = 0; i < garbage.length; i++) {
-      for(let j = 0; j < garbage[i].length; j ++) {
-        if (garbage[i][j].isGarbage) garbage[i].splice(j, 1);
+    for(let i = 0;  i < garbage.length;  i++) {
+      for(let j = 0;  j < garbage[i].length;  j ++) {
+        if (garbage[i][j].isGarbage) garbage[i].splice(j, 1) 
       }
     }
   }
@@ -147,74 +149,74 @@ export default class Engine {
   // main render loop 
   playRender(){
     // reset player movement 
-    for(let i = 0; i < this.player.length; i++){
-      this.player[i].resetMovement();
+    for(let i = 0;  i < this.player.length;  i++){
+      this.player[i].resetMovement() 
     }
     // poll inputs to upodate state
-    for(let i = 0; i < this.inputDevices.length; i++) {
+    for(let i = 0;  i < this.inputDevices.length;  i++) {
       this.inputDevices[i].poll()
     }
 
     // update and draw background
-    this.bgCtx.clearRect(0, 0, this.width, this.height);
-    this.bgCtx.fillStyle = this.levels[0].backgroundColor; 
-    this.bgCtx.fillRect(0, 0, this.width, this.height);
-    for(let i = 0; i < this.background.length; i++){
-      // console.log(i, this.background[i][0]);
-      for(let j = 0; j < this.background[i].length; j++){
-        this.background[i][j].update();
-        this.background[i][j].draw();
+    this.bgCtx.clearRect(0, 0, this.width, this.height) 
+    this.bgCtx.fillStyle = this.levels[0].backgroundColor  
+    this.bgCtx.fillRect(0, 0, this.width, this.height) 
+    for(let i = 0;  i < this.background.length;  i++){
+      // console.log(i, this.background[i][0]) 
+      for(let j = 0;  j < this.background[i].length;  j++){
+        this.background[i][j].update() 
+        this.background[i][j].draw() 
       }
     }
 
     // update and draw game canvas  
-    this.gameCtx.clearRect(0, 0, this.width, this.height);
+    this.gameCtx.clearRect(0, 0, this.width, this.height) 
     // draw player objects
-    for(let i = 0; i < this.player.length; i++){
-      this.player[i].update();
-      this.player[i].draw();
+    for(let i = 0;  i < this.player.length;  i++){
+      this.player[i].update() 
+      this.player[i].draw() 
     }
 
     // draw enemy objects
 
     // draw particle objects
-    for(let i = 0; i < this.particles.length; i++) {
-      this.particles[i].update();
-      this.particles[i].draw();
+    for(let i = 0; i < this.particles.length;  i++) {
+      this.particles[i].update() 
+      this.particles[i].draw() 
     }
 
     // check if ui/HUD needs to update
 
     // find objects marked as garbage
-    this.collectGarbage([...this.background]);
+    this.collectGarbage([...this.background]) 
     // get rid of empty arrays
-    for(let i = 0; i < this.background.length; i++) {
-      if(this.background[i].length === 0) this.background.splice(i, 1);
+    for(let i = 0;  i < this.background.length;  i++) {
+      if(this.background[i].length === 0) this.background.splice(i, 1) 
     }
-    this.collectGarbage([this.player, this.enemies, this.particles]);
+    this.collectGarbage([this.player, this.enemies, this.particles]) 
 
     // update wavemachine
     if(this.currentLevel.waveMachine) {
-      if(this.enemies.length === 0) this.currentLevel.waveMachine.waveActive = false;
-      this.currentLevel.waveMachine.update();
+      if(this.enemies.length === 0) this.currentLevel.waveMachine.waveActive = false 
+      this.currentLevel.waveMachine.update() 
     }
 
     // update HUD
     
-    requestAnimationFrame(this.renderPointer);
+    requestAnimationFrame(this.renderPointer) 
   }
 
   pauseRender() {
     // draw background
-    this.gameCtx.clearRect(0, 0, this.width, this.height);
-    this.gameCtx.fillStyle = this.levels[0].backgroundColor;
-    this.gameCtx.fillRect(0, 0, this.width, this.height);
-    for(let i = 0; i < this.background.length; i++){
-      for(let j = 0; j < this.background[i].length; j++){
-        this.background[i][j].draw();
+    this.gameCtx.clearRect(0, 0, this.width, this.height) 
+    this.gameCtx.fillStyle = this.levels[0].backgroundColor 
+    this.gameCtx.fillRect(0, 0, this.width, this.height) 
+    for(let i = 0;  i < this.background.length;  i++){
+      for(let j = 0;  j < this.background[i].length;  j++){
+        this.background[i][j].draw() 
       }
     }
 
-    requestAnimationFrame(this.renderPointer);
+    requestAnimationFrame(this.renderPointer) 
   }
 }

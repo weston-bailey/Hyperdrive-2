@@ -1,14 +1,14 @@
 // game engine
-import Engine from './GameEngine/Engine.js';
-import Audio from './GameEngine/Audio.js';
-import Input from './GameEngine/Controllers.js';
-import Level from './GameEngine/Level.js';
-import KeyboardInput from './GameEngine/KeyboardInput.js';
-import Wavemachine from './GameEngine/Wavemachine.js';
+import Engine from './GameEngine/Engine.js' 
+import Audio from './GameEngine/Audio.js' 
+import Input from './GameEngine/Controllers.js' 
+import Level from './GameEngine/Level.js' 
+import KeyboardInput from './GameEngine/KeyboardInput.js' 
+import Wavemachine from './GameEngine/Wavemachine.js' 
 // backgrounds
-import Box from './background/Box.js';
-import Planet from './background/Planet.js';
-import Star from './background/Star.js';
+import Box from './background/Box.js' 
+import Planet from './background/Planet.js' 
+import Star from './background/Star.js' 
 // enemies
 import Polygon from './enemy/Polygon.js'
 // non player/enemy objects

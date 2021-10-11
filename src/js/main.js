@@ -2,14 +2,19 @@ import css from '../css/styles.css'
 import { Engine } from './lib/modules.js'
 
 function init() {
-  let side = window.innerWidth < window.innerHeight ? window.innerWidth - 10 : window.innerHeight - 10;
-  let gameArgs = {
-    divId: 'canvas-container', // html canvas element id
-    height: side,       // cnvas height in pixels
-    width: side,        // canvas width in pixels
-    currentLevel: 0          // level to start at
+  // find the smaller side and use that
+  const side = window.innerWidth < window.innerHeight ? window.innerWidth - 10 : window.innerHeight - 10 
+  const gameArgs = {
+    // html canvas element id
+    divId: 'canvas-container',
+    // cnvas height in pixels
+    height: side,       
+    width: side,
+    // level to start at
+    currentLevel: 0         
   }
-  new Engine(gameArgs);
+
+  new Engine(gameArgs) 
 }
 
-const LOAD_PAGE = document.addEventListener('DOMContentLoaded', init());
+document.addEventListener('DOMContentLoaded', init)

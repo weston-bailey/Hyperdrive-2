@@ -1,5 +1,5 @@
-import Component from "./Component.js";
-import { Util } from '../modules.js';
+import Component from "./Component.js" 
+import { Util } from '../modules.js' 
 /*
 const wavemachineArgs = {
   game: this,
@@ -10,12 +10,12 @@ const wavemachineArgs = {
 // creates waves for each level
 export default class Wavemachine extends Component{
   constructor(wavemachineArgs){
-    super();
-    this.game = wavemachineArgs.game;
-    this.waveActive = false;
-    this.waveFunctions = wavemachineArgs.enemyTypes; 
-    this.waveCount = 0;
-    this.waveMax = wavemachineArgs.waveMax || Util.randomIntInRange(8, 12);
+    super() 
+    this.game = wavemachineArgs.game 
+    this.waveActive = false 
+    this.waveFunctions = wavemachineArgs.enemyTypes  
+    this.waveCount = 0 
+    this.waveMax = wavemachineArgs.waveMax || Util.randomIntInRange(8, 12) 
   }
 
   update(){
@@ -26,11 +26,11 @@ export default class Wavemachine extends Component{
     waveIndex = Util.clamp(waveIndex, 0, this.waveFunctions.length) // may not need
     let waveFunction = this.waveFunctions[waveIndex]
     if(typeof waveFunction != `function`){ // may nod need
-      console.warn(`wavemachine needs a function and found ${this.waveFunctions[waveIndex]} at index ${waveIndex} wavemachine retuning early`);
-      return;
+      console.warn(`wavemachine needs a function and found ${this.waveFunctions[waveIndex]} at index ${waveIndex} wavemachine retuning early`) 
+      return 
     }
     // generate new wave
-    waveFunction();
+    waveFunction() 
     this.waveActive = true
     if(this.game.gameActive){
       this.waveCount++
