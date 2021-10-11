@@ -11,7 +11,7 @@ const debrisArgs = {
 */
 
 // debris from collisions
-export default class Debris extends Component{
+export default class Debris extends Component {
   //staring x, starting y, speed that debris dissapears (values closer to 0 is longer), color of debris
   //constructor is randomized is not passed values when created 
   constructor(debirsArgs) {

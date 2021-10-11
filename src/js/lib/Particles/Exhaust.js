@@ -19,7 +19,7 @@ export default class Exhaust extends Component {
     this.speedX = exhaustArgs.speedX || Util.randomSignInRange(this.game.units.width * .1, this.game.units.width) 
     this.speedY = exhaustArgs.speedY || Util.randomInRange(this.game.units.height * .5, this.game.units.height * 2) 
     this.x = exhaustArgs.x 
-    this.y = exhaustArgs.y  // || ship.noseY + 45 
+    this.y = exhaustArgs.y  
     this.size = Util.randomInRange(this.game.units.width * .5, this.game.units.width * 4) 
     this.colorR = 255 
     this.colorG =  0 

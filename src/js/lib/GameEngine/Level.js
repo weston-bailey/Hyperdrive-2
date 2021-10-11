@@ -45,7 +45,7 @@ export default class Level extends Component {
     for(let i = 0;  i < this.backgroundLayers.length;  i++) {
       this.game.background.push([]) 
       // the class we are about to invoke
-      let backgroundObject = this.backgroundLayers[i].class 
+      const backgroundObject = this.backgroundLayers[i].class 
       for(let j = 0;  j < this.backgroundLayers[i].amount;  j++) {
         // make a new object and push it to the array
         this.game.background[i].push(new backgroundObject(this.backgroundLayers[i].args))

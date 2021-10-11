@@ -22,9 +22,11 @@ export default class Engine {
     this.bgCtx = null 
     this.gameCtx = null 
     this.uiCtx = null 
+
     // w/h in pixels of render area
     this.height = gameArgs.height 
     this.width = gameArgs.width 
+
     // relative measurement units
     this.units = {
       width: null,
@@ -33,6 +35,7 @@ export default class Engine {
       spawn2X: null,
       spawn3X: null,
     } 
+
     // game state
     this.renderPointer = null  
     this.gameActive = false 
@@ -47,6 +50,7 @@ export default class Engine {
     this.currentLevel = gameArgs.currentLevel 
     this.levels = [] 
     this.garbage = [] 
+
     // for menus and score tracking
     this.score = {
       totalWaves: 0,
@@ -119,6 +123,7 @@ export default class Engine {
       //     e.gamepad.axes.length
       //   ) 
     }) 
+
     this.gamepadDisconnected = window.addEventListener("gamepaddisconnected", (e) => {
       this.inputDevices.splice(e.gamepad.index + 1, 1) 
       console.log(
@@ -178,6 +183,11 @@ export default class Engine {
     }
 
     // draw enemy objects
+    for(let i = 0; i < this.enemies.length;  i++) {
+      this.enemies[i].update() 
+      this.enemies[i].draw() 
+    }
+    // console.log(this.enemies.length)
 
     // draw particle objects
     for(let i = 0; i < this.particles.length;  i++) {
@@ -196,9 +206,10 @@ export default class Engine {
     this.collectGarbage([this.player, this.enemies, this.particles]) 
 
     // update wavemachine
-    if(this.currentLevel.waveMachine) {
-      if(this.enemies.length === 0) this.currentLevel.waveMachine.waveActive = false 
-      this.currentLevel.waveMachine.update() 
+    const wavemachine = this.levels[this.currentLevel].wavemachine
+    if(wavemachine.getWaveActive()) {
+      if(this.enemies.length === 0) wavemachine.setWaveActive(false)
+      wavemachine.update()
     }
 
     // update HUD
@@ -217,6 +228,9 @@ export default class Engine {
       }
     }
 
-    requestAnimationFrame(this.renderPointer) 
+  requestAnimationFrame(this.renderPointer) 
   }
+
+  // setter and getter methods
+  addEnemy = enemy => this.enemies.push(enemy)
 }

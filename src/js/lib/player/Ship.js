@@ -128,6 +128,7 @@ export default class Ship extends Component{
       this.game.gameCtx.closePath() 
       this.game.gameCtx.stroke() 
     }
+    // console.log(this.noseX, this.noseY)
   }
 
   //for debug
