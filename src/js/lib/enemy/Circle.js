@@ -46,6 +46,7 @@ export default class Circle extends Component {
     // }
     // if(this.y > 0) console.log(this)
   }
+
   draw() {
     this.game.gameCtx.lineWidth = 2
     this.game.gameCtx.strokeStyle = this.color
@@ -58,6 +59,14 @@ export default class Circle extends Component {
   //for debug (no radius needed)
   drawCollisionRadius() {
     return
+  }
+
+  collide() {
+    this.color = 'red'
+  }
+
+  resetCollide() {
+    this.color = 'white'
   }
 
   makeDebris() {

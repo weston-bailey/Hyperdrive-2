@@ -4,6 +4,7 @@ import { GameEngine, Util } from '../modules.js'
 import Ship from '../player/Ship.js' 
 import GamepadInput from './GamepadInput.js' 
 import KeyboardInput from './KeyboardInput.js' 
+import CircleCircleCollision from '../pyhsics/CircleCircleCollision.js'
 
 /*
 engineArgs = {
@@ -196,6 +197,25 @@ export default class Engine {
     }
 
     // check if ui/HUD needs to update
+
+    // check for collisions
+    for(let i = 0; i < this.enemies.length; i++) {
+
+      const collisionArgs = {
+        radius1: 15, 
+        x1: this.player[0].noseX,
+        y1: this.player[0].noseY,
+        radius2: this.enemies[i].radius,
+        x2: this.enemies[i].x,
+        y2: this.enemies[i].y,
+      }
+
+      if(CircleCircleCollision.detect(collisionArgs)) {
+        this.enemies[i].collide()
+      } else {
+        this.enemies[i].resetCollide()
+      }
+    }
 
     // find objects marked as garbage
     this.collectGarbage([...this.background]) 
