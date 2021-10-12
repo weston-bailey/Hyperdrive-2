@@ -14,13 +14,13 @@ const debrisArgs = {
 export default class Debris extends Component {
   //staring x, starting y, speed that debris dissapears (values closer to 0 is longer), color of debris
   //constructor is randomized is not passed values when created 
-  constructor(debirsArgs) {
+  constructor({ game, x, y, color, alphaDecrement }) {
     super() 
-    this.game = debrisArgs.game 
-    this.x = debirsArgs.x 
-    this.y = debirsArgs.y 
-    this.color = debirsArgs.color || Util.hexToRGBArray(Util.randomColorHex()) 
-    this.alphaDecrement = debirsArgs.alphaDecrement || .1 
+    this.game = game 
+    this.x = x 
+    this.y = y 
+    this.color = color || Util.randomColorHex()
+    this.alphaDecrement = alphaDecrement || .1 
     this.speedX = Util.randomSignInRange(this.game.units.width * .1, this.game.units.width * 5) 
     this.speedY = Util.randomSignInRange(this.game.units.height * .1, this.game.units.height * 5) 
     this.alpha = 1   
@@ -34,6 +34,7 @@ export default class Debris extends Component {
 
   init() {
     super.returnFunctionProps() 
+    if(typeof this.color !== 'object') this.color = Util.hexToRGBArray(this.color)
   }
 
   update() {
@@ -46,8 +47,10 @@ export default class Debris extends Component {
       this.isGarbage = true 
     }
   }
+
   draw() {
     this.game.gameCtx.lineWidth = 1 
+    // console.log(this.color)
     this.game.gameCtx.strokeStyle = `rgba(${this.color[0]}, ${this.color[1]}, ${this.color[2]}, ${this.alpha})` 
     this.game.gameCtx.beginPath() 
     //same maths as polygon classes (see them for formula)

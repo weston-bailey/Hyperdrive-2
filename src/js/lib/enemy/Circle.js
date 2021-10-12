@@ -27,20 +27,21 @@ export default class Circle extends Component {
     // wraps around screen like playership
     this.x += this.speedX
     this.y += this.speedY
-    if(this.x > this.game.width + this.radius){                     
+    if(this.x > this.game.width + this.radius) {                     
       this.x = 0 - this.radius
     }       
     if(this.x < 0 - this.radius){                     
       this.x = this.game.width + this.radius
     }           
-    if(this.y > this.radius + this.game.height){
+    if(this.y > this.radius + this.game.height) {
       this.onScreen = false
       this.isGarbage = true
-    } else if(this.y < 0 - this.radius){
+    } else if(this.y < 0 - this.radius) {
       this.onScreen = false
     } else {
       this.onScreen = true
     }
+
     // if(this.y > this.game.height) {
     //   this.isGarbage = true
     // }
@@ -63,6 +64,8 @@ export default class Circle extends Component {
 
   collide() {
     this.color = 'red'
+    this.isGarbage = true
+    this.makeDebris()
   }
 
   resetCollide() {
@@ -70,15 +73,30 @@ export default class Circle extends Component {
   }
 
   makeDebris() {
-     //make alot of space junk
-     let amount = randomInRange(24, 64)
-     for (let i = 0; i < amount; i++) {
-       this.game.particles.push(new Particle.Debris({ x: this.x, y: this.y, alphaDecrement: .001, color: Util.hexToRGBArray(this.color) }))
-     }
-     amount = randomInRange(24, 64)
-     //make a little rainbow explosion
-     for (let i = 0; i < amount; i++) {
-       this.game.particles.push(new Particle.Debris({ x: this.x, y: this.y, alphaDecrement: .5, color: Util.hexToRGBArray(this.color) }))
+    //make alot of space junk
+    let amount = Util.randomInRange(24, 64)
+    let debrisArgs = { 
+      game: this.game,
+      x: this.x, 
+      y: this.y, 
+      alphaDecrement: .001, 
+    }
+
+    for (let i = 0; i < amount; i++) {
+      this.game.particles.push(new Particle.Debris(debrisArgs))
+    }
+
+    amount = Util.randomInRange(24, 64)
+    debrisArgs = { 
+      game: this.game,
+      x: this.x, 
+      y: this.y, 
+      alphaDecrement: .005, 
+    }
+
+    //make a little rainbow explosion
+    for (let i = 0; i < amount; i++) {
+      this.game.particles.push(new Particle.Debris(debrisArgs))
     }
   }
 }
