@@ -1,4 +1,5 @@
 import Component from "./Component.js" 
+import { Util } from "../modules.js"
 /*
 const keyboatdInputArgs = {
   game: this,
@@ -21,7 +22,7 @@ export default class GamepadInput extends Component{
   }
   
   // creates a deadzone in the middle of the analoge joystick axis
-  deadZone (number, threshold) {
+  deadZone(number, threshold) {
     let percentage = (Math.abs(number) - threshold) / (1 - threshold) 
     if(percentage < 0) percentage = 0 
     return percentage * (number > 0 ? 1 : -1) 
@@ -33,12 +34,12 @@ export default class GamepadInput extends Component{
     const gamepadX = this.deadZone(gamepad.axes[0], .05) 
       
     if(gamepadY) {
-      this.game.player[this.playerNumber].speedY = Math.abs(gamepadY) * (this.game.units.height * 5) 
+      this.game.player[this.playerNumber].speedY =  Util.scale(Math.abs(gamepadY), 0, 1, 0, 5) 
       this.game.player[this.playerNumber].directionY = gamepadY > 0 ? 1 : -1 
     } 
 
     if(gamepadX) {
-      this.game.player[this.playerNumber].speedX = Math.abs(gamepadX) * (this.game.units.height * 5) 
+      this.game.player[this.playerNumber].speedX = Util.scale(Math.abs(gamepadX), 0, 1, 0, 5) 
       this.game.player[this.playerNumber].directionX = gamepadX > 0 ? 1 : -1 
     } 
 

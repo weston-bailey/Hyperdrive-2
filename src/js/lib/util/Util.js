@@ -73,4 +73,11 @@ export default class Util {
             x < min ? min :
             x)
   }
+
+  // remaps value x of known range between xLo and xHi to new range of yLo to yHi
+  static scale(x, xLo, xHi, yLo, yHi) {
+    let percent = (x - xLo) / (xHi - xLo);
+    return percent * (yHi - yLo) + yLo;
+  }
+
 }
