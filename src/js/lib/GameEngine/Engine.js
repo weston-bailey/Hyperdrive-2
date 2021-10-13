@@ -5,6 +5,8 @@ import Ship from '../player/Ship.js'
 import GamepadInput from './GamepadInput.js' 
 import KeyboardInput from './KeyboardInput.js' 
 import CircleCircleCollision from '../pyhsics/CircleCircleCollision.js'
+import MouseInput from './MouseInput.js'
+
 
 /*
 engineArgs = {
@@ -51,6 +53,7 @@ export default class Engine {
     this.currentLevel = gameArgs.currentLevel 
     this.levels = [] 
     this.garbage = [] 
+    this.mouse = new MouseInput({ game: this,  canvas: this.uiCanvas })
 
     // for menus and score tracking
     this.score = {
@@ -59,6 +62,7 @@ export default class Engine {
       collisionsAvoided: 0,
       enemiesDestroyed: 0,
     }
+
     this.init() 
   }
 

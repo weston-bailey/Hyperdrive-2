@@ -30,7 +30,7 @@ export default class Circle extends Component {
     if(this.x > this.game.width + this.radius) {                     
       this.x = 0 - this.radius
     }       
-    if(this.x < 0 - this.radius){                     
+    if(this.x < 0 - this.radius) {                     
       this.x = this.game.width + this.radius
     }           
     if(this.y > this.radius + this.game.height) {
@@ -41,11 +41,6 @@ export default class Circle extends Component {
     } else {
       this.onScreen = true
     }
-
-    // if(this.y > this.game.height) {
-    //   this.isGarbage = true
-    // }
-    // if(this.y > 0) console.log(this)
   }
 
   draw() {
